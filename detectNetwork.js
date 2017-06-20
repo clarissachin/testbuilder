@@ -52,19 +52,17 @@ var detectNetwork = function(cardNumber) {
       return creditCards[i].name;
     }
   }
-
-  // Once you've read this, go ahead and try to implement this function, then return to the console.
 };
 
-console.log(detectNetwork('38345678901234')); // (Diner's Club)
-console.log(detectNetwork('39345678901234')); // (Diner's Club)
-console.log(detectNetwork('343456789012345')); //(American Express)
-console.log(detectNetwork('373456789012345')); //(American Express)
-console.log(detectNetwork('4123456789012')); // Visa
-console.log(detectNetwork('4123456789012345')); // Visa
-console.log(detectNetwork('4123456789012345678')); // Visa
-console.log(detectNetwork('5112345678901234')); // MasterCard
-console.log(detectNetwork('5212345678901234')); // MasterCard
-console.log(detectNetwork('5312345678901234')); // MasterCard
-console.log(detectNetwork('5412345678901234')); // MasterCard
-console.log(detectNetwork('5512345678901234')); // MasterCard
+// console.log(detectNetwork('38345678901234')); // (Diner's Club)
+// console.log(detectNetwork('39345678901234')); // (Diner's Club)
+// console.log(detectNetwork('343456789012345')); //(American Express)
+// console.log(detectNetwork('373456789012345')); //(American Express)
+// console.log(detectNetwork('4123456789012')); // Visa
+// console.log(detectNetwork('4123456789012345')); // Visa
+// console.log(detectNetwork('4123456789012345678')); // Visa
+// console.log(detectNetwork('5112345678901234')); // MasterCard
+// console.log(detectNetwork('5212345678901234')); // MasterCard
+// console.log(detectNetwork('5312345678901234')); // MasterCard
+// console.log(detectNetwork('5412345678901234')); // MasterCard
+// console.log(detectNetwork('5512345678901234')); // MasterCard

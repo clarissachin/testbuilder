@@ -6,58 +6,110 @@
 // You don't actually want to fill *this* value in on line 9, but you'll see
 // other places in this file where you'll replace the FILL_ME_IN with a
 // different value.
-var FILL_ME_IN = 'Fill this value in';
+// var FILL_ME_IN = 'Fill this value in';
 
-describe('Introduction to Mocha Tests - READ ME FIRST', function() {
-  // A Mocha test is just a function!
-  // If the function throws an error when run, it fails.
-  // If it doesn't throw an error when run, it doesn't fail.
-  // To read more about mocha, visit mochajs.org
+var assert = chai.assert;
 
-  // Once you've read and understood this section, please comment it out.
-  // You will not be able to proceed with a failing test.
+var creditCards = [
+  { name : 'Diner\'s Club', prefices : [38, 39], lengths : [14] },
+  { name : 'American Express', prefices : [34, 37], lengths : [15]},
+  { name : 'Visa', prefices : [4], lengths : [13, 16, 19]},
+  { name : 'MasterCard', prefices : [51, 52, 53, 54, 55], lengths : [16]},
+  { name : 'Discover', prefices : [6011, 644, 645, 646, 647, 648, 649, 65], lengths : [16, 19]},
+  { name : 'Maestro', prefices : [5018, 5020, 5038, 6304], lengths : [12, 13, 14, 15, 16, 17, 18, 19]}
+];
 
-  // it('Throws an error so it fails', function() {
-  //   throw new Error('Delete me!');
-  // });
+// Original method
+// function getPrefices(creditCard) {
+//   var prefices;
+//   for (var i = 0; i < creditCards.length; i++) {
+//     if (creditCards[i].name === creditCard) {
+//       prefices = creditCards[i].prefices;
+//     }
+//   }
+//   return prefices;
+// }
 
-  it('Doesn\'t throw an error, so it doesn\'t fail', function() {
-    // This test doesn't really test anything at all! It will pass no matter what.
-    var even = function(num){
-      return num/2 === 0;
-    }
-    return even(10) === true;
-  });
+// function getLengths(creditCard) {
+//   var lengths;
+//   for (var k = 0; k < creditCards.length; k++) {
+//     if (creditCards[k].name === creditCard) {
+//       lengths = creditCards[k].lengths;
+//     }
+//   }
+//   return lengths;
+// }
 
-  // In tests, we want to compare the expected behavior to the actual behavior.
-  // A test should only fail if the expected behavior doesn't match the actual.
-  it('Throws an error when expected behavior does not match actual behavior', function() {
-    var even = function(num){
-      return num % 2 === 0;
-    }
+// Refactored
 
-    if(even(10) !== true) {
-      throw new Error('10 should be even!');
-    }
-  });
-});
+function getPrefices(creditCard) {
+  return creditCards.find(function(card) {
+    return card.name === creditCard;
+  }).prefices;
+}
+
+function getLengths(creditCard) {
+  return creditCards.find(function(card) {
+    return card.name === creditCard;
+  }).lengths;
+}
+
+function generateNumber(prefix, length) {
+  var numString = prefix.toString();
+  for (var m = 0; m < length - prefix.toString().length; m++) {
+    var randNum = Math.floor(Math.random() * 10);
+    numString += randNum.toString();
+  }
+  return numString;
+}
+
+// describe('Introduction to Mocha Tests - READ ME FIRST', function() {
+//   // A Mocha test is just a function!
+//   // If the function throws an error when run, it fails.
+//   // If it doesn't throw an error when run, it doesn't fail.
+//   // To read more about mocha, visit mochajs.org
+//
+//   // Once you've read and understood this section, please comment it out.
+//   // You will not be able to proceed with a failing test.
+//
+//   // it('Throws an error so it fails', function() {
+//   //   throw new Error('Delete me!');
+//   // });
+//
+//   it('Doesn\'t throw an error, so it doesn\'t fail', function() {
+//     // This test doesn't really test anything at all! It will pass no matter what.
+//     var even = function(num){
+//       return num / 2 === 0;
+//     }
+//     return even(10) === true;
+//   });
+//
+//   // In tests, we want to compare the expected behavior to the actual behavior.
+//   // A test should only fail if the expected behavior doesn't match the actual.
+//   it('Throws an error when expected behavior does not match actual behavior', function() {
+//     var even = function(num){
+//       return num % 2 === 0;
+//     }
+//
+//     if(even(10) !== true) {
+//       throw new Error('10 should be even!');
+//     }
+//   });
+// });
+
 describe('Diner\'s Club', function() {
   // Be careful, tests can have bugs too...
+  var cardPrefices = getPrefices('Diner\'s Club');
+  var cardLengths = getLengths('Diner\'s Club');
+  var testCardName = 'Diner\'s Club';
 
-  it('has a prefix of 38 and a length of 14', function() {
-    if (detectNetwork('38123412341234') !== 'Diner\'s Club') {
-      throw new Error('Delete me!');
-    }
-    if (detectNetwork('38345678901234') !== 'Diner\'s Club') {
-      throw new Error('Test failed');
-    }
-  });
-
-  it('has a prefix of 39 and a length of 14', function() {
-    if (detectNetwork('39345678901234') !== 'Diner\'s Club') {
-      throw new Error('Test failed');
-    }
-
+  cardPrefices.forEach(function(prefix) {
+    cardLengths.forEach(function(length) {
+      var randomCardNum = generateNumber(prefix, length);
+      it('has a prefix of ' + prefix + ' and a length of ' + length, function() {
+        assert(detectNetwork(randomCardNum) === testCardName);
+      });
+    });
   });
 });
 
@@ -84,8 +136,7 @@ describe('Visa', function() {
   // Chai is an entire library of helper functions for tests!
   // Chai provides an assert that acts the same as our previous assert.
   // Search the documentation to figure out how to access it.
-  //   http://chaijs.com/
-  var assert = chai.assert;
+  //   http://chaijs.com;
 
   it('has a prefix of 4 and a length of 13', function() {
     assert(detectNetwork('4123456789012') === 'Visa');
